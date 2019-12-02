@@ -1,0 +1,54 @@
+﻿@model LoginViewModel
+@{
+    ViewBag.Title = "Use Login";
+}
+
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <h2 class="text-primary">Login using local account</h2>
+            <hr />
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input type="text" asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input type="text" asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checckbox">
+                    <label asp-for="RememberMe">
+                        <input asp-for="RememberMe" />
+                        @Html.DisplayNameFor(m => m.RememberMe)
+                    </label>
+                </div>
+            </div>            
+            <button class="btn btn-primary">Submit</button>
+            <div class="form-group">
+                <a asp-controller="Accounts" asp-action="ForgotPassword">Forgot Password</a>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <h2 class="text-primary">External Login</h2>
+        <hr />
+        <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
+            <div>
+                @foreach(var provider in Model.ExternalLogins)
+                {
+                    <button class="btn btn-primary" style="width:auto" name="provider" value="@provider.Name" title="Login using @provider.DisplayName account">
+                        @provider.DisplayName
+                    </button>
+                }
+            </div>
+        </form>
+    </div>
+    <div class="form-group">
+        <div asp-validation-summary="All" class="text-danger"></div>
+    </div>
+</div>
+
